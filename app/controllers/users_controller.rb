@@ -4,7 +4,20 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    if params[:name] && params[:age] == ""
+      @users = User.where(name: params[:name])
+      flash[:warning] = "該当データなし" if @users.count == 0
+    elsif params[:name] == "" && params[:age]
+      @users = User.where(age: params[:age])
+      flash[:warning] = "該当データなし" if @users.count == 0
+    elsif params[:name] && params[:age]
+      @users = User.where(name: params[:name]).where(age: params[:age])
+      flash[:warning] = "該当データなし" if @users.count == 0
+    else
+      flash[:warning] = ""
+      @age = 30
+      @users = User.find_by_sql("SELECT * FROM users WHERE age <= #{@age}")
+    end
   end
 
   # GET /users/1
