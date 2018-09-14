@@ -1,14 +1,18 @@
-<p id="notice"><%= notice %></p>
+<div class="box col-md-12">
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Age:</strong>
-  <%= @user.age %>
-</p>
+  <p>
+    <strong>Name:</strong>
+    <%= @user.name %>
+  </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+  <p>
+    <strong>Age:</strong>
+    <%= @user.age %>
+  </p>
+
+  <%= link_to 'Edit', edit_user_path(@user) %> |
+  <%= link_to 'Back', users_path %>
+
+</div>
