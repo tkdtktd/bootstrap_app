@@ -82,7 +82,8 @@
 
     <div class="containerfluid">
       <div class="row">
-        <%= yield %>  
+        <%= yield %>
+
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin: 200px auto;">
           <div class="modal-dialog" role="document">
@@ -105,6 +106,10 @@
           </div>
         </div>
 
+        <hr>
+        <div class="box col-md-12">
+          <%= debug params %> 
+        </div>
       </div>
     </div>
   </body>

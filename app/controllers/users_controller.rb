@@ -15,8 +15,10 @@ class UsersController < ApplicationController
       flash[:warning] = "該当データなし" if @users.count == 0
     else
       flash[:warning] = ""
-      @age = 30
-      @users = User.find_by_sql("SELECT * FROM users WHERE age <= #{@age}")
+      # @age = 30
+      # @users = User.find_by_sql("SELECT * FROM users WHERE age <= #{@age}")
+      # @users = User.find_by_sql("SELECT * FROM users").page(params[:page]).per(5)
+      @users = User.page(params[:page]).per(3)
     end
   end
 
@@ -82,6 +84,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :age)
+      params.require(:user).permit(:name, :age, :avatar)
     end
 end
