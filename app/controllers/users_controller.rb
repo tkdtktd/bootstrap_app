@@ -6,12 +6,15 @@ class UsersController < ApplicationController
   def index
     if params[:name] && params[:age] == ""
       @users = User.where(name: params[:name])
+      @users = @users.page(params[:page]).per(3)
       flash[:warning] = "該当データなし" if @users.count == 0
     elsif params[:name] == "" && params[:age]
       @users = User.where(age: params[:age])
+      @users = @users.page(params[:page]).per(3)
       flash[:warning] = "該当データなし" if @users.count == 0
     elsif params[:name] && params[:age]
       @users = User.where(name: params[:name]).where(age: params[:age])
+      @users = @users.page(params[:page]).per(3)
       flash[:warning] = "該当データなし" if @users.count == 0
     else
       flash[:warning] = ""

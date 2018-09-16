@@ -7,6 +7,8 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <!-- jquery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
     <%# Bootstrap ver.4 %>
@@ -71,8 +73,9 @@
           
           <%= form_tag(users_path, method: "get", class: "form-inline my-2 my-lg-0") do %>
             <%= text_field_tag :name, "" ,class: "form-control mr-sm-2", placeholder: "name" %>
-            <%= text_field_tag :age, "" ,class: "form-control mr-sm-2", placeholder: "age" %>
-            
+            <!-- <%= text_field_tag :age, "" ,class: "form-control mr-sm-2", placeholder: "age" %> -->
+            <%= select_tag :age, options_for_select([["選択",nil], ["20","43"], ["22","22"], ["17","17"], ["12","12"], ["16","16"]], selected: params[:age]), class: "form-control" %>
+
             <%= submit_tag '検索', class: "btn btn-outline-success my-2 my-sm-0" %>
           <% end %>
         </ul>
@@ -112,5 +115,48 @@
         </div>
       </div>
     </div>
+    <script>
+      // $(function() {
+      //   $('h1').css('color', 'red')
+      // });
+      // 多い書き方！
+
+      // $(document).ready(function() {
+      //   $('h1').css('color', 'red')
+      // });
+
+      // jQuery(function(){
+      //   $('h1').css('color', 'red')
+      // });
+
+      // jQuery(document).ready(function() {
+      //   $('h1').css('color', 'red')
+      // });
+    </script>
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
+        <div class='slick'>
+          <div class='slick-item'>
+            <div><h3><a href="#"><img src="/dogs/pic_1.jpg" width="25%" height="25%"></a></h3></div>
+            <div><h3><a href="#"><img src="/dogs/pic_2.jpg" width="25%" height="25%"></a></h3></div>
+            <div><h3><a href="#"><img src="/dogs/pic_3.jpg" width="25%" height="25%"></a></h3></div>
+            <div><h3><a href="#"><img src="/dogs/pic_4.jpg" width="25%" height="25%"></a></h3></div>
+          </div>
+        </div>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
+      <script>
+      // $(".slick-item").slick({
+      //   accessibility: true,
+      //   autoplay: true,
+      //   autoplaySpeed: 500,
+      //   cssEase: 'ease',
+      //   dots: true,
+      //   fade: false,
+      // });
+    </script>
+
   </body>
 </html>
