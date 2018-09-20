@@ -1,6 +1,10 @@
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
 
+.containerfluid {
+  padding-top: 60px;
+}
+
 .carousel {
   margin-bottom: 50px;
 }

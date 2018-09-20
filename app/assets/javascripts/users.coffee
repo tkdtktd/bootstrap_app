@@ -7,10 +7,14 @@ $ ->
   $(".slick-item").slick(
     accessibility: true,
     autoplay: true,
-    autoplaySpeed: 500,
+    autoplaySpeed: 2000,
+    speed: 500,
     cssEase: 'ease',
     dots: true,
     fade: false,
+    draggable: true,
+    slidesToShow: 2,
+    centerPadding: '100px'
   )
 
 # signal = "red"

@@ -30,7 +30,7 @@
   <body>
     <!-- As a link -->
     <%# ナビゲーションバー %>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <%= link_to "Dogs", users_path, class: "navbar-brand" %>
       <!-- <a class="navbar-brand" href="#">Navbar</a> -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,8 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <%= link_to "HOME", users_path, class: "dropdown-item" %>
               <%= link_to "NEW", new_user_path, class: "dropdown-item" %>
-              <button type="button" class="dropdown-item" data-toggle="modal" data-target="#exampleModal">
+              <button type="button" class="dropdown-item" data-toggle="modal" 
+              data-target="#exampleModal">
               MODAL
             </button>
               <!-- <a class="dropdown-item" href="#">Action</a>
@@ -74,7 +75,13 @@
           <%= form_tag(users_path, method: "get", class: "form-inline my-2 my-lg-0") do %>
             <%= text_field_tag :name, "" ,class: "form-control mr-sm-2", placeholder: "name" %>
             <!-- <%= text_field_tag :age, "" ,class: "form-control mr-sm-2", placeholder: "age" %> -->
-            <%= select_tag :age, options_for_select([["選択",nil], ["20","43"], ["22","22"], ["17","17"], ["12","12"], ["16","16"]], selected: params[:age]), class: "form-control" %>
+            <!-- Userモデルのageカラムを取り出し、重複を除く -->
+            <% age_distinct = [] %>
+            <% User.select("age").distinct.each do |a|  %>
+              <% age_distinct << [a.age, a.age] %>
+            <% end %>
+
+            <%= select_tag :age, options_for_select(age_distinct, selected: params[:age]), class: "form-control", prompt: "選択してください" %>
 
             <%= submit_tag '検索', class: "btn btn-outline-success my-2 my-sm-0" %>
           <% end %>
@@ -138,10 +145,10 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
         <div class='slick'>
           <div class='slick-item'>
-            <div><h3><a href="#"><img src="/dogs/pic_1.jpg" width="25%" height="25%"></a></h3></div>
-            <div><h3><a href="#"><img src="/dogs/pic_2.jpg" width="25%" height="25%"></a></h3></div>
-            <div><h3><a href="#"><img src="/dogs/pic_3.jpg" width="25%" height="25%"></a></h3></div>
-            <div><h3><a href="#"><img src="/dogs/pic_4.jpg" width="25%" height="25%"></a></h3></div>
+            <div><h3><a href="#"><img src="/dogs/pic_1.jpg" width="100%" height="100%"></a></h3></div>
+            <div><h3><a href="#"><img src="/dogs/pic_2.jpg" width="100%" height="100%"></a></h3></div>
+            <div><h3><a href="#"><img src="/dogs/pic_3.jpg" width="100%" height="100%"></a></h3></div>
+            <div><h3><a href="#"><img src="/dogs/pic_4.jpg" width="100%" height="100%"></a></h3></div>
           </div>
         </div>
 
