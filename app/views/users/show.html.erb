@@ -1,14 +1,27 @@
-<p id="notice"><%= notice %></p>
+<div class="box col-md-12">
+  <div class="box col-md-8">
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+    <% if flash[:notice] %>
+      <p id="notice" class="alert alert-secondary"><%= notice %></p>
+    <% end%>
 
-<p>
-  <strong>Age:</strong>
-  <%= @user.age %>
-</p>
+    <p>
+      <strong>Name:</strong>
+      <%= @user.name %>
+    </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+    <p>
+      <strong>Age:</strong>
+      <%= @user.age %>
+    </p>
+
+    <p>
+      <%= image_tag @user.avatar.url if @user.avatar? %>
+    </p>
+
+    <hr>
+
+    <%= link_to 'Edit', edit_user_path(@user), class: "btn btn-primary btn-sm" %> 
+    <%= link_to 'Back', users_path, class: "btn btn-secondary btn-sm" %>
+  </div>
+</div>
