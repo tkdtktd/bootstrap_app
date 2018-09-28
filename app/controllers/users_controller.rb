@@ -28,6 +28,14 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    if params[:hoge]
+      @user = User.new(name: params[:hoge])
+      @user.save
+    end
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /users/new

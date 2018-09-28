@@ -19,6 +19,14 @@
       <%= image_tag @user.avatar.url if @user.avatar? %>
     </p>
 
+    <%= form_tag(url_for(:action => 'show'), :remote => true) do %>
+      <% if User.where(id: 1) %>
+        <h1><%= submit_tag "👍" %></h1>
+      <% else %>
+        <h1>👍</h1>
+      <% end %>
+    <% end %>
+
     <hr>
 
     <%= link_to 'Edit', edit_user_path(@user), class: "btn btn-primary btn-sm" %> 
