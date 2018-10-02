@@ -4,6 +4,8 @@ class OwnersController < ApplicationController
 
   def show
     @owner = Owner.find(params[:id])
+    @users = @owner.users
+    @users = @users.page(params[:page]).per(3)
   end
 
   private

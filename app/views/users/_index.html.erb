@@ -1,0 +1,44 @@
+
+<%# ページネーション %>
+<%= paginate users %>
+
+<%# テーブル %>
+<div class="table-narrow">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th colspan="1"></th>
+        <th scope="col">Name</th>
+        <th scope="col">Age</th>
+        <th colspan="5"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= flash[:warning] %>
+      <% users.each do |user| %>
+        <tr>
+          <td><%= image_tag user.avatar.thumb.url if user.avatar? %></td>
+          <td><%= user.name %></td>
+          <td><%= user.age %></td>
+          <td><%= link_to 'プロフィール', user, class: "btn btn-outline-info btn-sm" %></td>
+          <td><%= link_to '編集', edit_user_path(user), class: "btn btn-outline-warning btn-sm" if user.owner == current_owner %></td>
+          <td><%= link_to '削除', user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger btn-sm" if user.owner == current_owner %></td>
+          <td>
+          <!-- 画像の表示はLityを利用 -->
+          <%= link_to '写真を見る', user.avatar.url, 'data-lity': 'data-lity', class: "btn btn-primary" %>
+        </tr>
+
+        <!-- Modal
+          <%= render partial: '/layouts/modal', collections: @users %>
+        -->
+
+      <% end %>
+    </tbody>
+  </table>
+  <%# ページネーション %>
+  <%= paginate users %>
+
+</div>
+<%# テーブルここまで %>
+
+
