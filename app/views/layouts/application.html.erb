@@ -7,6 +7,11 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <!-- LightBox2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
+
     <!-- jquery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -19,15 +24,6 @@
     <!-- fontawesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-    <%# Bootstrap ver.3 %>
-    <%# <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> %>
   </head>
 
   <body>
@@ -35,105 +31,73 @@
     <%# ナビゲーションバー %>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <%= link_to "Dogs", users_path, class: "navbar-brand" %>
-      <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <%= link_to users_path, class: "nav-link" do %>
-              HOME <span class="sr-only">(current)</span>
-            <!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
+            <%= link_to root_path, class: "nav-link" do %>
+              ホーム <span class="sr-only">(current)</span>
             <% end %>
           </li>
-          <li class="nav-item">
-            <%= link_to "NEW", new_user_path, class: "nav-link" %>
-            <!-- <a class="nav-link" href="#">Features</a> -->
-          </li>
-          <li class="nav-item">
-            <!-- <%= link_to "MODAL", new_user_path, class: "nav-link" %> -->
-            <a href='#' class="nav-link" data-toggle="modal" data-target="#exampleModal">
-              MODAL
-            </a>
-            <!-- <a class="nav-link" href="#">Pricing</a> -->
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown link
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <%= link_to "HOME", users_path, class: "dropdown-item" %>
-              <%= link_to "NEW", new_user_path, class: "dropdown-item" %>
-              <button type="button" class="dropdown-item" data-toggle="modal" 
-              data-target="#exampleModal">
-              MODAL
-            </button>
-              <!-- <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a> -->
-            </div>
-          </li>
-          
+          <% if signed_in? %>
+            <li class="nav-item">
+              <%= link_to "愛犬登録", new_user_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "ユーザー情報", current_owner, class: "nav-link" %>
+            </li>
+            <li>
+              <%= link_to "ログアウト", destroy_owner_session_path, method: "delete", class: "nav-link" %>
+            </li>
+          <% else %>
+            <li>
+              <%= link_to "ログイン", new_owner_session_path, class: "nav-link" %>
+            </li>
+            <li>
+              <%= link_to "ユーザー登録", new_owner_registration_path, class: "nav-link" %>
+            </li>
+          <% end %>
         </ul>
-      </div>
         <%= form_tag(users_path, method: "get", class: "form-inline my-2 my-lg-0") do %>
-          <%= text_field_tag :name, "" ,class: "form-control mr-sm-2", placeholder: "name" %>
-          <!-- <%= text_field_tag :age, "" ,class: "form-control mr-sm-2", placeholder: "age" %> -->
+          <%= text_field_tag :name, '', class: "form-control mr-sm-2" %>
+          
           <!-- Userモデルのageカラムを取り出し、重複を除く -->
           <% age_distinct = [] %>
           <% User.select("age").distinct.each do |a|  %>
             <% age_distinct << [a.age, a.age] %>
           <% end %>
 
-          <%= select_tag :age, options_for_select(age_distinct, selected: params[:age]), class: "form-control", prompt: "選択してください" %>
+          <%= select_tag :age, options_for_select(age_distinct, selected: params[:age]), class: "form-control", prompt: "年齢を選択してください" %>
           &ensp;
           <%= submit_tag '検索', class: "btn btn-outline-success my-2 my-sm-0" %>
         <% end %>
-        &emsp;
-      <%= link_to 'New Dog', new_user_path, class: "btn btn-outline-primary" %>
+      </div>
     </nav>
     <%# ナビゲーションバーここまで %>
 
     <div class="containerfluid">
       <div class="row">
-        <%= yield %>
-
-        
-
-        <hr>
         <div class="box col-md-12">
+
+          <%# flashメッセージを表示 %>
+          <% flash.each do |key, value| %>
+            <div class="alert <%= bootstrap_class_for(key) %>">
+              <%= value %>
+            </div>
+          <% end %>
+
+          <%= yield %>
+          <%# ここにほかのビューが挿入される %>
+        
+        <hr>
+        
           <%= debug params %> 
         </div>
       </div>
     </div>
-    <script>
-      // $(function() {
-      //   $('h1').css('color', 'red')
-      // });
-      // 多い書き方！
-
-      // $(document).ready(function() {
-      //   $('h1').css('color', 'red')
-      // });
-
-      // jQuery(function(){
-      //   $('h1').css('color', 'red')
-      // });
-
-      // jQuery(document).ready(function() {
-      //   $('h1').css('color', 'red')
-      // });
-    
-      // $(".slick-item").slick({
-      //   accessibility: true,
-      //   autoplay: true,
-      //   autoplaySpeed: 500,
-      //   cssEase: 'ease',
-      //   dots: true,
-      //   fade: false,
-      // });
-    </script>
-
+      
   </body>
 </html>

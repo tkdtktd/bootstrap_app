@@ -1,0 +1,25 @@
+<%# 自分が飼い主の犬にはいいね出来ないようにする。 %>
+<% if user.owner_id == current_owner.id %>
+  <% if Like.find_by(owner_id: current_owner.id, user_id: user.id) %>
+    <div class="unlike-btn">
+      <%= form_tag like_path(user_id: user.id, id: @like.id), method: :delete, remote: true do %>
+        <%= button_tag type: "submit" do %>
+          <i class="fas fa-heart fa-2x"></i>
+          <span><%= user.likes.count %> いいね！</span>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="like-btn">
+      <%= form_tag likes_path(user_id: user.id), method: :post, remote: true do %>
+        <%= button_tag type: "submit" do %>
+          <i class="far fa-heart fa-2x"></i>
+          <span><%= user.likes.count %> いいね！</span>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <i class="fas fa-heart fa-2x"></i>
+  <%= user.likes.count %> いいね！
+<% end %>

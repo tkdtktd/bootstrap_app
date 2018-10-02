@@ -1,19 +1,24 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_owner!, only: [:new, :show, :create, :edit, :update, :destroy]
+  # ログインしていない場合は犬の登録などの操作を制限する。
+
+  before_action :ensure_correct_owner, only: [:edit, :update, :destroy]
+  # 飼い主以外は犬の情報を編集できないようにする。
 
   # GET /users
   # GET /users.json
   def index
-    if params[:name] && params[:age] == ""
-      @users = User.where(name: params[:name])
+    if params[:name] != "" && params[:age] == ""
+      @users = User.where('name LIKE ?', "%#{params[:name]}%")
       @users = @users.page(params[:page]).per(3)
       flash[:warning] = "該当データなし" if @users.count == 0
-    elsif params[:name] == "" && params[:age]
+    elsif params[:name] == "" && params[:age] != ""
       @users = User.where(age: params[:age])
       @users = @users.page(params[:page]).per(3)
       flash[:warning] = "該当データなし" if @users.count == 0
     elsif params[:name] && params[:age]
-      @users = User.where(name: params[:name]).where(age: params[:age])
+      @users = User.where('name LIKE ?', "%#{params[:name]}%").where(age: params[:age])
       @users = @users.page(params[:page]).per(3)
       flash[:warning] = "該当データなし" if @users.count == 0
     else
@@ -28,14 +33,8 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    if params[:hoge]
-      @user = User.new(name: params[:hoge])
-      @user.save
-    end
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    @user = User.find(params[:id])
+    @like = Like.find_by(owner_id: current_owner.id, user_id: params[:id])
   end
 
   # GET /users/new
@@ -51,6 +50,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
+    @user.owner_id = current_owner.id
 
     respond_to do |format|
       if @user.save
@@ -95,6 +95,15 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :age, :avatar)
+      params.require(:user).permit(:name, :age, :avatar, :owner_id)
+    end
+    
+    # 飼い主以外は犬の情報を編集できないようにするためのメソッド
+    def ensure_correct_owner
+      @user = User.find(params[:id])
+      if current_owner.id != @user.owner_id
+        flash[:notice] = "権限がありません"
+        redirect_to users_path
+      end
     end
 end

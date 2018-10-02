@@ -1,6 +1,19 @@
 class User < ApplicationRecord
-  # validates :name, presence: true
-  # validates :age, presence: true
+
+  belongs_to :owner
+  has_many :likes, dependent: :destroy
+
+  validates :name, presence: true
+  validates :age, presence: true
+  validates :owner_id, presence: true
 
   mount_uploader :avatar, AvatarUploader
+
+  def owner
+    return Owner.find(self.owner_id)
+  end
+
+  def likes
+    return Like.where(user_id: self.id)
+  end
 end

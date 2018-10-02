@@ -1,35 +1,32 @@
-<div class="box col-md-12">
-  <div class="box col-md-8">
 
-    <% if flash[:notice] %>
-      <p id="notice" class="alert alert-secondary"><%= notice %></p>
-    <% end%>
+<div class="box col-md-8 mx-auto">
 
-    <p>
-      <strong>Name:</strong>
-      <%= @user.name %>
-    </p>
+  <p>
+    <strong>飼い主:</strong>
+    <%= @user.owner.name %>
+  </p>
 
-    <p>
-      <strong>Age:</strong>
-      <%= @user.age %>
-    </p>
+  <p>
+    <strong>名前:</strong>
+    <%= @user.name %>
+  </p>
 
-    <p>
-      <%= image_tag @user.avatar.url if @user.avatar? %>
-    </p>
+  <p>
+    <strong>年齢:</strong>
+    <%= @user.age %>
+  </p>
 
-    <%= form_tag(url_for(:action => 'show'), :remote => true) do %>
-      <% if User.where(id: 1) %>
-        <h1><%= submit_tag "👍" %></h1>
-      <% else %>
-        <h1>👍</h1>
-      <% end %>
-    <% end %>
+  <p>
+    <%= image_tag @user.avatar.url if @user.avatar? %>
+  </p>
 
-    <hr>
-
-    <%= link_to 'Edit', edit_user_path(@user), class: "btn btn-primary btn-sm" %> 
-    <%= link_to 'Back', users_path, class: "btn btn-secondary btn-sm" %>
+  <%# いいねボタンを表示 %>
+  <div class="like-buttons">
+    <%= render partial: '/likes/like',locals: {user: @user} %>
   </div>
+
+  <hr>
+
+  <%= link_to 'Edit', edit_user_path(@user), class: "btn btn-primary btn-sm" %> 
+  <%= link_to 'Back', users_path, class: "btn btn-secondary btn-sm" %>
 </div>

@@ -2,20 +2,22 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
   
-$ ->
-# slickスライダー
-  $(".slick-item").slick(
-    accessibility: true,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    speed: 500,
-    cssEase: 'ease',
-    dots: true,
-    fade: false,
-    draggable: true,
-    slidesToShow: 2,
-    centerPadding: '100px'
-  )
+# $ ->
+
+
+# # slickスライダー
+#   $(".slick-item").slick(
+#     accessibility: true,
+#     autoplay: true,
+#     autoplaySpeed: 2000,
+#     speed: 500,
+#     cssEase: 'ease',
+#     dots: true,
+#     fade: false,
+#     draggable: true,
+#     slidesToShow: 2,
+#     centerPadding: '100px'
+#   )
 
 # signal = "red"
 # switch signal
