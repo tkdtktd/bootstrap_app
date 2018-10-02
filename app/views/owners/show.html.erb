@@ -15,38 +15,14 @@
   <p>
     <strong><%= @owner.name %>さんの愛犬たち</strong>
   </p>
-  <%# テーブル %>
-  <div class="table-narrow">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th colspan="1"></th>
-          <th scope="col">Name</th>
-          <th scope="col">Age</th>
-          <th colspan="5"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <%= flash[:warning] %>
-        <% @owner.users.each do |user| %>
-          <tr>
-            <td><%= image_tag user.avatar.thumb.url if user.avatar? %></td>
-            <td><%= user.name %></td>
-            <td><%= user.age %></td>
-            <td><%= link_to 'プロフィール', user, class: "btn btn-outline-info btn-sm" %></td>
-            <td><%= link_to '編集', edit_user_path(user), class: "btn btn-outline-warning btn-sm" if user.owner == current_owner %></td>
-            <td><%= link_to '削除', user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger btn-sm" if user.owner == current_owner %></td>
-            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-              写真を見る
-            </button></td>
-          </tr>
 
-          <!-- Modal -->
-          <%= render partial: '/layouts/modal', locals: {user: user} %>
+  <% if @owner.users.count != 0 %>
+    <%# Indexを呼び出す %>
+    <%= render partial: "/users/index", locals: {users: @users} %>
+  <% else %>
+    <h6>まだ登録されていません</h6>
+  <% end %>
 
-        <% end %>
-      </tbody>
-    </table>
   <hr>
 
   <%= link_to 'Edit', edit_owner_registration_path, class: "btn btn-primary btn-sm" %> 
