@@ -4,7 +4,7 @@
 </div>
 
 <%# カルーセル %>
-<div id="carouselExampleIndicators" class="carousel slide col-md-8 col-xl-6 mx-auto" data-ride="carousel">
+<div id="carouselExampleIndicators" class="carousel slide col-md-8 col-xl-6 mx-auto" data-ride="carousel" data-interval="3000" data-pause="false">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -18,7 +18,7 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="d-block w-100" src="dogs/pic_1.jpg" alt="Dogs slide">
+      <img class="d-block w-100" src="/dogs/pic_1.jpg" alt="Dogs slide">
     </div>
     <% (2..9).each do |n| %>
       <div class="carousel-item">
@@ -36,7 +36,17 @@
   </a>
 </div>
 <%# カルーセルここまで %>
-<div class="box col-md-8 mx-auto">
+
+
+<div class="box col-md-12 col-lg-10 col-xl-8 mx-auto">
+   
+  <h3>あなたの自慢の愛犬をみんなで共有しよう！</h3>
+  <p>かわいい愛犬の写真やプロフィールを投稿し、いいね！やコメントをもらいましょう。</p>
+  <% unless signed_in? %>
+    <p>はじめての方はこちら...
+    <%= link_to "新規登録", new_owner_registration_path, class: "btn btn-info btn-sm" %></p>
+  <% end %>
+  <br>
   <%# Indexページを呼び出す %>
   <%= render partial: "index", locals: {users: @users} %>
 </div>

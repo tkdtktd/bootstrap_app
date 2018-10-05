@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html>
   <head>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <title>Dogs information</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <!-- Lity -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js'></script>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/lity/1.6.6/lity.css' />  
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/lity/1.6.6/lity.js'></script>
-
     <!-- jquery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <!-- Lity -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/lity/1.6.6/lity.js'></script>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/lity/1.6.6/lity.css' />  
 
     <%# Bootstrap ver.4 %>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
-
+    
     <!-- fontawesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
+    <%# CSS %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+    <%# フォント %>
+    <link href="https://fonts.googleapis.com/css?family=Kosugi+Maru|Varela+Round" rel="stylesheet">
   </head>
 
   <body>
     <!-- As a link -->
     <%# ナビゲーションバー %>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
       <%= link_to "Dogs", users_path, class: "navbar-brand" %>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <div class="collapse navbar-collapse shift" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">
             <%= link_to root_path, class: "nav-link" do %>
@@ -59,10 +64,11 @@
             <li>
               <%= link_to "ユーザー登録", new_owner_registration_path, class: "nav-link" %>
             </li>
+            &ensp;
           <% end %>
         </ul>
         <%= form_tag(users_path, method: "get", class: "form-inline my-2 my-lg-0") do %>
-          <%= text_field_tag :name, '', class: "form-control mr-sm-2" %>
+          <%= text_field_tag :name, '', class: "form-control mr-sm-2", placeholder: "犬の名前で検索" %>
           
           <!-- Userモデルのageカラムを取り出し、重複を除く -->
           <% age_distinct = [] %>
@@ -70,9 +76,9 @@
             <% age_distinct << [a.age, a.age] %>
           <% end %>
 
-          <%= select_tag :age, options_for_select(age_distinct, selected: params[:age]), class: "form-control", prompt: "年齢を選択してください" %>
+          <%= select_tag :age, options_for_select(age_distinct, selected: params[:age]), class: "form-control", prompt: "年齢を選択..." %>
           &ensp;
-          <%= submit_tag '検索', class: "btn btn-outline-success my-2 my-sm-0" %>
+          <%= submit_tag '検索', class: "btn btn-outline-success my-2 my-sm-0 slide" %>
         <% end %>
       </div>
     </nav>
@@ -80,24 +86,27 @@
 
     <div class="containerfluid">
       <div class="row">
-        <div class="box col-md-12">
+        <div class="box col-md-12 mx-auto">
 
           <%# flashメッセージを表示 %>
           <% flash.each do |key, value| %>
-            <div class="alert <%= bootstrap_class_for(key) %>">
-              <%= value %>
-            </div>
+            <% if flash[key] != "" %>
+              <div class="alert <%= bootstrap_class_for(key) %>">
+                <%= value %>
+              </div>
+            <% end %>
           <% end %>
 
           <%= yield %>
           <%# ここにほかのビューが挿入される %>
         
-        <hr>
-        
           <%= debug params %> 
         </div>
       </div>
     </div>
+
+
+
       
   </body>
 </html>
