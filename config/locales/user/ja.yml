@@ -1,0 +1,10 @@
+# モデル名
+ja:
+  activerecord:
+    models:
+      user: 犬
+    attributes:
+      user:
+        id: 投稿ID
+        name: 名前
+        age: 年齢
