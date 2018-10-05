@@ -2,6 +2,7 @@ class User < ApplicationRecord
 
   belongs_to :owner
   has_many :likes, dependent: :destroy
+  has_many :posts, dependent: :destroy
 
   validates :name, presence: true
   validates :age, presence: true

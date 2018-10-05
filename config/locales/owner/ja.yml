@@ -1,0 +1,10 @@
+# モデル名
+ja:
+  activerecord:
+    models:
+      owner: ユーザーアカウント
+    attributes:
+      owner:
+        id: アカウントID
+        name: 名前
+        email: メールアドレス

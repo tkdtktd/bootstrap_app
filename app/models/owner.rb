@@ -6,15 +6,16 @@ class Owner < ApplicationRecord
   
   has_many :users, dependent: :destroy
   has_many :likes, dependent: :destroy
+  has_many :posts, dependent: :destroy
   
   validates :name, presence: true
   validates :email, presence: true
 
   def users
-    return User.where(owner_id: self.id)
+    User.where(owner_id: self.id)
   end
 
   def likes
-    return Like.where(owner_id: self.id)
+    Like.where(owner_id: self.id)
   end
 end

@@ -1,0 +1,10 @@
+# モデル名
+ja:
+  activerecord:
+    models:
+      post: 投稿
+    attributes:
+      post:
+        user_id: 投稿ID
+        owner_id: ユーザーID
+        content: 投稿内容

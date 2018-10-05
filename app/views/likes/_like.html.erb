@@ -3,7 +3,7 @@
   <% if Like.find_by(owner_id: current_owner.id, user_id: user.id) %>
     <div class="unlike-btn">
       <%= form_tag like_path(user_id: user.id, id: @like.id), method: :delete, remote: true do %>
-        <%= button_tag type: "submit" do %>
+        <%= button_tag type: "submit", class: "btn btn-default" do %>
           <i class="fas fa-heart fa-2x"></i>
           <span><%= user.likes.count %> いいね！</span>
         <% end %>
@@ -12,7 +12,7 @@
   <% else %>
     <div class="like-btn">
       <%= form_tag likes_path(user_id: user.id), method: :post, remote: true do %>
-        <%= button_tag type: "submit" do %>
+        <%= button_tag type: "submit", class: "btn btn-danger" do %>
           <i class="far fa-heart fa-2x"></i>
           <span><%= user.likes.count %> いいね！</span>
         <% end %>

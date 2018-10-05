@@ -1,3 +1,8 @@
+<ol class="breadcrumb" style="margin-top: -10px;">
+  <li class="breadcrumb-item"><a href="#">Home</a></li>
+  <li class="breadcrumb-item"><a href="#">Library</a></li>
+  <li class="breadcrumb-item active">Data</li>
+</ol>
 
 <div class="box col-md-8 mx-auto">
   <h1>愛犬プロフィール</h1>
@@ -27,9 +32,32 @@
     <%= render partial: '/likes/like',locals: {user: @user} %>
   </div>
 
+  
+  <!-- ここ -->
+  <hr>
+  <% Post.all.each do |text| %>
+    <% if @user.id == text.user_id %>
+      <p><b><%= text.created_at.strftime('%Y年%m月%d日') %></b>: <%= simple_format text.content %></p>
+    <% end %>
+  <% end %>
+
   <hr>
   <% if @user.owner == current_owner %>
     <%= link_to '愛犬情報編集', edit_user_path(@user), class: "btn btn-primary btn-sm" %> 
   <% end %>
-  <%= link_to '戻る', users_path, class: "btn btn-secondary btn-sm" %>
+
+  <%= link_to '戻る', users_path, class: "btn btn-secondary", style: "float: left;" %>
+  
+  <%= form_tag(new_post_path, method: "get") do %>
+    &emsp;	
+    <%= submit_tag "返信", class: "btn btn-primary" %>
+    <%= hidden_field_tag :user_id, @user.id %>
+    <%= 
+      if current_owner 
+        hidden_field_tag :owner_id, current_owner.id
+      else
+        ""
+      end
+    %>
+  <% end %>
 </div>
