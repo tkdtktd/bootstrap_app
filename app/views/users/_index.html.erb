@@ -8,8 +8,8 @@
     <thead>
       <tr>
         <th colspan="1"></th>
-        <th scope="col">Name</th>
-        <th scope="col">Age</th>
+        <th scope="col"><%= t 'activerecord.attributes.user.name' %></th>
+        <th scope="col"><%= t 'activerecord.attributes.user.age' %></th>
         <th colspan="5"></th>
       </tr>
     </thead>
@@ -20,25 +20,22 @@
           <td><%= image_tag user.avatar.thumb.url if user.avatar? %></td>
           <td><%= user.name %></td>
           <td><%= user.age %></td>
-          <td><%= link_to 'プロフィール', user, class: "btn btn-outline-info btn-sm" %></td>
-          <td><%= link_to '編集', edit_user_path(user), class: "btn btn-outline-warning btn-sm" if user.owner == current_owner %></td>
-          <td><%= link_to '削除', user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger btn-sm" if user.owner == current_owner %></td>
+          <td><%= link_to 'プロフィール', user, class: "btn shiney profile" %></td>
+          <td><%= link_to '編集', edit_user_path(user), class: "btn shiney edit" if user.owner == current_owner %></td>
+          <td><%= link_to '削除', user, method: :delete, data: { confirm: '削除してよろしいですか?' }, class: "btn shiney destroy" if user.owner == current_owner %></td>
           <td>
           <!-- 画像の表示はLityを利用 -->
-          <%= link_to '写真を見る', user.avatar.url, 'data-lity': 'data-lity', class: "btn btn-primary" %>
+          <%= link_to '写真を見る', user.avatar.url, 'data-lity': 'data-lity', class: "btn shiney zoom" %>
         </tr>
-
-        <!-- Modal
-          <%= render partial: '/layouts/modal', collections: @users %>
-        -->
 
       <% end %>
     </tbody>
   </table>
-  <%# ページネーション %>
-  <%= paginate users %>
 
 </div>
 <%# テーブルここまで %>
+
+<%# ページネーション %>
+<%= paginate users %>
 
 

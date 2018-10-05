@@ -1,5 +1,5 @@
 <%# 自分が飼い主の犬にはいいね出来ないようにする。 %>
-<% if user.owner_id != current_owner.id %>
+<% if signed_in? && user.owner_id != current_owner.id %>
   <% if Like.find_by(owner_id: current_owner.id, user_id: user.id) %>
     <div class="unlike-btn">
       <%= form_tag like_path(user_id: user.id, id: @like.id), method: :delete, remote: true do %>
@@ -22,4 +22,7 @@
 <% else %>
   <i class="fas fa-heart fa-2x"></i>
   <%= user.likes.count %> いいね！
+  <% unless signed_in? %>
+    <p class="border-info">「いいね！」するには、ログインが必要です。</p>
+  <% end %>
 <% end %>

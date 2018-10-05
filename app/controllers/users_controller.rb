@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_owner!, only: [:new, :show, :create, :edit, :update, :destroy]
+  before_action :authenticate_owner!, only: [:new, :create, :edit, :update, :destroy]
   # ログインしていない場合は犬の登録などの操作を制限する。
 
   before_action :ensure_correct_owner, only: [:edit, :update, :destroy]
@@ -11,22 +11,22 @@ class UsersController < ApplicationController
   def index
     if params[:name] != "" && params[:age] == ""
       @users = User.where('name LIKE ?', "%#{params[:name]}%")
-      @users = @users.page(params[:page]).per(3)
+      @users = @users.page(params[:page]).per(10)
       flash[:warning] = "該当データなし" if @users.count == 0
     elsif params[:name] == "" && params[:age] != ""
       @users = User.where(age: params[:age])
-      @users = @users.page(params[:page]).per(3)
+      @users = @users.page(params[:page]).per(10)
       flash[:warning] = "該当データなし" if @users.count == 0
     elsif params[:name] && params[:age]
       @users = User.where('name LIKE ?', "%#{params[:name]}%").where(age: params[:age])
-      @users = @users.page(params[:page]).per(3)
+      @users = @users.page(params[:page]).per(10)
       flash[:warning] = "該当データなし" if @users.count == 0
     else
       flash[:warning] = ""
       # @age = 30
       # @users = User.find_by_sql("SELECT * FROM users WHERE age <= #{@age}")
       # @users = User.find_by_sql("SELECT * FROM users").page(params[:page]).per(5)
-      @users = User.page(params[:page]).per(3)
+      @users = User.page(params[:page]).per(10)
     end
   end
 
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
-    @like = Like.find_by(owner_id: current_owner.id, user_id: params[:id])
+    @like = Like.find_by(owner_id: current_owner.id, user_id: params[:id]) if signed_in?
   end
 
   # GET /users/new
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to @user, notice: '情報を登録しました' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -68,7 +68,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to @user, notice: '情報を更新しました' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -82,7 +82,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to users_url, notice: '情報を削除しました' }
       format.json { head :no_content }
     end
   end
