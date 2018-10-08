@@ -1,6 +1,6 @@
 
 <div class="col-md-8 mx-auto">
-  <h1><%= t('activerecord.models.user') %></h1>
+  <h1>Dogs Information</h1>
 </div>
 
 <%# カルーセル %>
@@ -44,7 +44,7 @@
   <p>かわいい愛犬の写真やプロフィールを投稿し、いいね！やコメントをもらいましょう。</p>
   <% unless signed_in? %>
     <p>はじめての方はこちら...
-    <%= link_to "新規登録", new_owner_registration_path, class: "btn btn-info btn-sm" %></p>
+    <%= link_to "ユーザー登録", new_owner_registration_path, class: "btn btn-outline-info" %></p>
   <% end %>
   <br>
   <%# Indexページを呼び出す %>

@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :posts, dependent: :destroy
 
-  validates :name, presence: true
+  validates :name, presence: true, length: {maximum: 50}
   validates :age, presence: true
   validates :owner_id, presence: true
 

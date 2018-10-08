@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <title>Dogs information</title>
     <%= csrf_meta_tags %>
@@ -76,7 +75,7 @@
             <% age_distinct << [a.age, a.age] %>
           <% end %>
 
-          <%= select_tag :age, options_for_select(age_distinct, selected: params[:age]), class: "form-control", prompt: "年齢を選択..." %>
+          <%= select_tag :age, options_for_select(age_distinct, selected: params[:age]), class: "form-control", prompt: "年齢で検索..." %>
           &ensp;
           <%= submit_tag '検索', class: "btn btn-outline-success my-2 my-sm-0 slide" %>
         <% end %>
@@ -97,10 +96,10 @@
             <% end %>
           <% end %>
 
-          <%= yield %>
           <%# ここにほかのビューが挿入される %>
+          <%= yield %>
         
-          <%= debug params %> 
+          <%= debug params if Rails.env.development? %> 
         </div>
       </div>
     </div>

@@ -24,14 +24,23 @@
   </div>
 
   <div class="field">
+    <%= form.label :introduction %>
+    <%= form.text_area :introduction, class: "form-control" %>
+  </div>
+
+  <div class="field">
     <%= form.label :avatar %>
+    <br>
     <%= form.file_field :avatar %>
   </div>
-
-  <div class="avatar">
-    <%= image_tag @user.avatar.url if @user.avatar? %>
-  </div>
-
+  <br>
+  <% if @user.avatar? %>
+    <p style="margin: 0;">（現在登録中の写真）</p>
+    <div class="avatar">
+      <%= image_tag @user.avatar.url %>
+    </div>
+  <% end %>
+  <br>
   <div class="actions">
     <%= form.submit "登録する", class: "btn btn-primary" %>
   </div>

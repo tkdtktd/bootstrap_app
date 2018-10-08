@@ -12,7 +12,7 @@
   <% else %>
     <div class="like-btn">
       <%= form_tag likes_path(user_id: user.id), method: :post, remote: true do %>
-        <%= button_tag type: "submit", class: "btn btn-danger" do %>
+        <%= button_tag type: "submit", class: "btn btn-default" do %>
           <i class="far fa-heart fa-2x"></i>
           <span><%= user.likes.count %> いいね！</span>
         <% end %>
@@ -22,7 +22,4 @@
 <% else %>
   <i class="fas fa-heart fa-2x"></i>
   <%= user.likes.count %> いいね！
-  <% unless signed_in? %>
-    <p class="border-info">「いいね！」するには、ログインが必要です。</p>
-  <% end %>
 <% end %>

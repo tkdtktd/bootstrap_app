@@ -2,9 +2,10 @@
 ja:
   activerecord:
     models:
-      owner: ユーザーアカウント
+      owner: ユーザー
     attributes:
       owner:
         id: アカウントID
-        name: 名前
+        name: ユーザー名
         email: メールアドレス
+        
