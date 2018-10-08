@@ -126,7 +126,7 @@ ja:
         update: "更新する"
         we_need_your_current_password_to_confirm_your_changes: "変更を反映するには現在のパスワードを入力してください"
       new:
-        sign_up: "アカウント登録"
+        sign_up: "ユーザー登録"
         forgot_your_password: "パスワードを忘れましたか?"
         send_me_reset_password_instructions: "パスワードの再設定方法を送信する"
       signed_up: "アカウント登録が完了しました。"

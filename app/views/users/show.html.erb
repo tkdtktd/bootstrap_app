@@ -1,8 +1,10 @@
+<!--
 <ol class="breadcrumb" style="margin-top: -10px;">
   <li class="breadcrumb-item"><a href="#">Home</a></li>
   <li class="breadcrumb-item"><a href="#">Library</a></li>
   <li class="breadcrumb-item active">Data</li>
 </ol>
+-->
 
 <div class="box col-md-8 mx-auto">
   <h1>愛犬プロフィール</h1>
@@ -46,8 +48,6 @@
     <%= link_to '情報編集', edit_user_path(@user), class: "btn btn-primary btn-info" %> 
   <% end %>
 
-  <%= link_to '戻る', users_path, class: "btn btn-secondary" %>
-
   <%# ログインしている場合だけ、返信ボタンを有効化 %>
   <% if signed_in? %>
     <%= form_tag(new_post_path, method: "get",class: "form-inline-block") do %>
@@ -66,6 +66,8 @@
     <button type="button" class="btn btn-primary" disabled>コメントする</button>
   <% end %>
   
+  <%= link_to '戻る', users_path, class: "btn btn-secondary" %>
+
   <!-- コメント一覧 -->
   <hr>
   <h3>コメント</h3>
