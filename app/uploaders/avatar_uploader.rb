@@ -1,7 +1,7 @@
 class AvatarUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
-  include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  # include CarrierWave::RMagick
+  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -43,7 +43,19 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  def filename
-    "something.jpg" if original_filename
+  # def filename
+  #   "something.jpg" if original_filename
+  # end
+
+  # Exif情報のOrientationから画像をよしなに修正した後、Exif情報を除去する
+  process :fix_exif_rotation_and_strip_exif
+
+  def fix_exif_rotation_and_strip_exif
+    manipulate! do |img|
+      img.auto_orient # よしなに！
+      img.strip       # Exif情報除去
+      img = yield(img) if block_given?
+      img
+    end
   end
 end

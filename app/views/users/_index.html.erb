@@ -9,7 +9,7 @@
       <tr>
         <th colspan="1"></th>
         <th scope="col"><%= t('activerecord.attributes.user.name') %></th>
-        <th scope="col"><%= t('activerecord.attributes.user.name') %></th>
+        <th scope="col"><%= t('activerecord.attributes.user.age') %></th>
         <th colspan="5"></th>
       </tr>
     </thead>
@@ -17,7 +17,7 @@
       <%= flash[:warning] %>
       <% users.each do |user| %>
         <tr>
-          <td><%= image_tag user.avatar.thumb.url if user.avatar? %></td>
+          <td><%= image_tag user.avatar[0].thumb.url %></td>
           <td><%= user.name %></td>
           <td><%= user.age %></td>
           <td><%= link_to 'プロフィール', user, class: "btn shiney profile" %></td>
@@ -25,7 +25,7 @@
           <td><%= link_to '削除', user, method: :delete, data: { confirm: '削除してよろしいですか?' }, class: "btn shiney destroy" if user.owner == current_owner %></td>
           <td>
           <!-- 画像の表示はLityを利用 -->
-          <%= link_to '写真を見る', user.avatar.url, 'data-lity': 'data-lity', class: "btn shiney zoom" %>
+          <%= link_to '写真を見る', user.avatar[0].url, 'data-lity': 'data-lity', class: "btn shiney zoom" %>
         </tr>
 
       <% end %>

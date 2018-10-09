@@ -42,6 +42,8 @@
         <div class="box col-md-12 mx-auto">
 
           <%# flashメッセージを表示 %>
+          <!-- <%= devise_error_messages! %> -->
+
           <% flash.each do |key, value| %>
             <% if flash[key] != "" %>
               <div class="alert <%= bootstrap_class_for(key) %>">

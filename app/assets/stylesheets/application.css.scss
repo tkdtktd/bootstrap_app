@@ -41,6 +41,13 @@ body {
     display: inline-block;
   }
 
+  .user-show-img {
+    img {
+      margin: 5px;
+      box-shadow: 2px 2px 10px black;
+    }
+  }
+
   // ナビゲーションバー
   .navbar {
     // background: rgba(200, 255, 200, 0.9);
