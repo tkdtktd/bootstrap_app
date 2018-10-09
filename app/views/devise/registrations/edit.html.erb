@@ -31,17 +31,17 @@
       <%= f.label :current_password %> <i></i><br />
       <%= f.password_field :current_password, autocomplete: "current-password" %>
     </div>
-
+    <br>
     <div class="actions">
-      <%= f.submit "ユーザー情報更新" %>
+      <%= f.submit "ユーザー情報更新", class: "btn btn-\primary" %>
     </div>
   <% end %>
   <br>
-  <h3>アカウントの削除</h3>
+  <h3><%= t('devise.registrations.edit.cancel_my_account') %></h3>
 
   <p>削除すると、このアカウントではログインできなくなります。
-  <%= button_to "アカウントを削除する", owner_registration_path, data: { confirm: "このアカウントを削除します。よろしいですか？" }, method: :delete %></p>
-
-  <%= link_to '変更せずに戻る', current_owner, class: "btn btn-secondary btn-sm" %>
+  <%= button_to t('devise.registrations.edit.cancel_my_account'), owner_registration_path, data: { confirm: "このアカウントを削除します。よろしいですか？" }, method: :delete, class: "btn btn-danger" %></p>
+  <hr>
+  <%= link_to '変更せずに戻る', current_owner, class: "btn btn-secondary" %>
 </div>
 

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :posts
-  devise_for :owners, controllers: {registrations: 'owners/registrations'}
+  devise_for :owners, controllers: {registrations: 'owners/registrations', sessions: 'owners/sessions'}
   # devise が生成してくれたownerモデルのコントローラのうち、registrations_controller はこちらでカスタムしたものを使いますよ、という宣言。（registrationsのすべてのメソッドを定義する必要はなく、カスタムしたいものだけを宣言すればよい）
 
   resources :owners, only: [:show]

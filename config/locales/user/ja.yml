@@ -2,9 +2,12 @@
 ja:
   activerecord:
     models:
-      user: 犬
+      user: 愛犬
     attributes:
       user:
-        id: 投稿ID
+        id: 愛犬ID
         name: 名前
         age: 年齢
+        avatar: 写真
+        introduction: 紹介
+        owner: 飼い主

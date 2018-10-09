@@ -1,63 +1,93 @@
+<!--
 <ol class="breadcrumb" style="margin-top: -10px;">
   <li class="breadcrumb-item"><a href="#">Home</a></li>
   <li class="breadcrumb-item"><a href="#">Library</a></li>
   <li class="breadcrumb-item active">Data</li>
 </ol>
+-->
 
 <div class="box col-md-8 mx-auto">
   <h1>愛犬プロフィール</h1>
   <hr>
 
-  <p>
-    <strong>飼い主:</strong>
-    <%= @user.owner.name %>
-  </p>
 
   <p>
-    <strong>名前:</strong>
+    <strong><%= t 'activerecord.attributes.user.name' %>：</strong>
     <%= @user.name %>
   </p>
 
   <p>
-    <strong>年齢:</strong>
+    <strong><%= t 'activerecord.attributes.user.age' %>：</strong>
     <%= @user.age %>
   </p>
 
   <p>
-    <%= image_tag @user.avatar.url if @user.avatar? %>
+    <strong><%= t 'activerecord.attributes.user.owner' %>：</strong>
+    <%= @user.owner.name %>
   </p>
+
+  <p>
+    <strong><%= t 'activerecord.attributes.user.introduction' %>：</strong>
+    <%= @user.introduction %>
+  </p>
+</div>
+
+<div class="box col-md-10 mx-auto">
+  <p class="user-show-img">
+    <% @user.avatar.each do |avatar| %>
+        <%= image_tag avatar.url %>
+      <% end %>
+  </p>
+
+  <p>（最終更新：<%= @user.updated_at.strftime('%Y年%m月%d日') %>）</p> 
 
   <%# いいねボタンを表示 %>
   <div class="like-buttons">
     <%= render partial: '/likes/like',locals: {user: @user} %>
   </div>
 
-  
-  <!-- ここ -->
-  <hr>
-  <% Post.all.each do |text| %>
-    <% if @user.id == text.user_id %>
-      <p><b><%= text.created_at.strftime('%Y年%m月%d日') %></b>: <%= simple_format text.content %></p>
-    <% end %>
+  <% unless signed_in? %>
+    <p class="border-info">「いいね！」やコメントをするには、ログインが必要です。</p>
   <% end %>
 
   <hr>
   <% if @user.owner == current_owner %>
-    <%= link_to '愛犬情報編集', edit_user_path(@user), class: "btn btn-primary btn-sm" %> 
+    <%= link_to '情報編集', edit_user_path(@user), class: "btn btn-primary btn-info" %> 
   <% end %>
 
-  <%= link_to '戻る', users_path, class: "btn btn-secondary", style: "float: left;" %>
+  <%# ログインしている場合だけ、返信ボタンを有効化 %>
+  <% if signed_in? %>
+    <%= form_tag(new_post_path, method: "get",class: "form-inline-block") do %>
+      
+      <%= submit_tag "コメントする", class: "btn btn-primary" %>
+      <%= hidden_field_tag :user_id, @user.id %>
+      <%= 
+        if current_owner 
+          hidden_field_tag :owner_id, current_owner.id
+        else
+          ""
+        end
+      %>
+    <% end %>
+  <% else %>
+    <button type="button" class="btn btn-primary" disabled>コメントする</button>
+  <% end %>
   
-  <%= form_tag(new_post_path, method: "get") do %>
-    &emsp;	
-    <%= submit_tag "返信", class: "btn btn-primary" %>
-    <%= hidden_field_tag :user_id, @user.id %>
-    <%= 
-      if current_owner 
-        hidden_field_tag :owner_id, current_owner.id
-      else
-        ""
-      end
-    %>
+  <%= link_to '戻る', users_path, class: "btn btn-secondary" %>
+
+  <!-- コメント一覧 -->
+  <hr>
+  <h3>コメント</h3>
+  <% Post.all.each do |post| %>
+    <% if @user.id == post.user_id %>
+      <p>
+        <% if @user.owner_id == post.owner_id %>
+          <b><%= post.owner.name %> - <%= post.created_at.strftime('%Y年%m月%d日') %>（飼い主さんのコメント）</b>
+        <% else %>
+          <b><%= post.owner.name %> - <%= post.created_at.strftime('%Y年%m月%d日') %></b>
+        <% end %>
+        <%= simple_format post.content %>
+      </p>
+    <% end %>
   <% end %>
 </div>

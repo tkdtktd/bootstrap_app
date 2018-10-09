@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_owner!, only: [:new, :create, :edit, :update, :destroy]
 
   # GET /posts
   # GET /posts.json
@@ -25,11 +26,12 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(post_params)
+    @user = User.find(@post.user_id)
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
-        format.json { render :show, status: :created, location: @post }
+        format.html { redirect_to @user, notice: 'コメントを投稿しました' }
+        format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
         format.json { render json: @post.errors, status: :unprocessable_entity }

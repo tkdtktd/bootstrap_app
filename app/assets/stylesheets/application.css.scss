@@ -1,7 +1,7 @@
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
 
-// shineyボタン用
+// users-indexのshineyボタン用
 $profile: #2194E0;
 $edit: rgb(192, 150, 72);
 $destroy: rgb(209, 113, 113);
@@ -15,10 +15,38 @@ $zoom: rgb(84, 145, 84);
   }
 }
 
+// body
 body {
   background-image: url('/bg_white.jpg');
   background-size: cover;
   font-family: 'Varela Round', 'Kosugi Maru', 'meiryo', 'メイリオ', 'ヒラギノ丸ゴ ProN', sans-serif;
+
+  // ボタンの背景は不透明にする
+  *[class*="btn-outline"] {
+    background-color: rgb(255, 255, 255);
+    opacity: 1.0;
+  }
+
+  form {
+    .field {
+      label {
+        margin-top: 1.0rem;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  // form_tagのボタンをインライン要素に
+  .form-inline-block {
+    display: inline-block;
+  }
+
+  .user-show-img {
+    img {
+      margin: 5px;
+      box-shadow: 2px 2px 10px black;
+    }
+  }
 
   // ナビゲーションバー
   .navbar {
@@ -27,7 +55,7 @@ body {
     background: #dfd;
     opacity: 1.0;
 
-    // アニメーション効果
+    // ヘッダー項目のアニメーション効果
     .shift {
       ul {
         li {
@@ -37,12 +65,14 @@ body {
             position:relative;
             z-index: 1;
             transition: all .5s;
-
+            
             &:hover {
               color: #91640F;
               transition: all .5s;
             }
             &:after {
+              border: 3px outset gray;
+              border-radius: 10%;
               display: block;
               position: absolute;
               top: 0;
@@ -54,7 +84,7 @@ body {
               height: 1px;
               content: '.';
               color: transparent;
-              background: rgb(250, 215, 225);
+              background: rgba(248, 194, 209, 0.5);
               visibility: none;
               opacity: 0;
               z-index: -1;
@@ -72,9 +102,10 @@ body {
 
     // ロゴ
     .navbar-brand {
-      font-family: 'Comic Sans MS';
+      font-family: 'Comic Sans MS', 'メイリオ', 'ヒラギノ丸ゴ ProN', sans-serif;
       font-size: 150%;
       padding: 0;
+      text-shadow: #d66 2px 2px 2px;
     }
 
     // ハンバーガーメニュー

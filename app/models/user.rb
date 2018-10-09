@@ -4,11 +4,12 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :posts, dependent: :destroy
 
-  validates :name, presence: true
+  validates :name, presence: true, length: {maximum: 50}
   validates :age, presence: true
   validates :owner_id, presence: true
 
-  mount_uploader :avatar, AvatarUploader
+  mount_uploaders :avatar, AvatarUploader
+  serialize :avatar,JSON
 
   def owner
     return Owner.find(self.owner_id)
