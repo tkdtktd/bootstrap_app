@@ -1,23 +1,37 @@
 class AvatarUploader < CarrierWave::Uploader::Base
-
+  
   if Rails.env.production?
     include Cloudinary::CarrierWave
+    
+    cloudinary_transformation :angle => :exif, :flags => :force_strip
   else
     # Include RMagick or MiniMagick support:
     # include CarrierWave::RMagick
     include CarrierWave::MiniMagick
-
+    
     # Choose what kind of storage to use for this uploader:
     storage :file
     # storage :fog
-
+    
     # Override the directory where uploaded files will be stored.
     # This is a sensible default for uploaders that are meant to be mounted:
     def store_dir
       "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     end
+    
+    # Exif情報のOrientationから画像をよしなに修正した後、Exif情報を除去する
   end
-
+  
+  process :fix_exif_rotation_and_strip_exif
+  
+  def fix_exif_rotation_and_strip_exif
+    manipulate! do |img|
+      img.auto_orient # よしなに！
+      img.strip       # Exif情報除去
+      img = yield(img) if block_given?
+      img
+    end
+  end
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)
   #   # For Rails 3.1+ asset pipeline compatibility:
@@ -52,15 +66,4 @@ class AvatarUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
 
-  # Exif情報のOrientationから画像をよしなに修正した後、Exif情報を除去する
-  process :fix_exif_rotation_and_strip_exif
-
-  def fix_exif_rotation_and_strip_exif
-    manipulate! do |img|
-      img.auto_orient # よしなに！
-      img.strip       # Exif情報除去
-      img = yield(img) if block_given?
-      img
-    end
-  end
 end
