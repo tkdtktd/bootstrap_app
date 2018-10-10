@@ -31,24 +31,20 @@
   <div class="field">
     <%= form.label :avatar %>
     <br>
-    <%= form.file_field :avatar, multiple: true %>
-    <%= form.file_field :avatar, multiple: true %>
-    <%= form.file_field :avatar, multiple: true %>
+    <%= form.file_field :avatar %>
+
   </div>
   <br>
-  <% if @user.avatar? %>
+  <% if user.avatar? %>
     <p style="margin: 0;">（現在登録中の写真）</p>
-    <div class="avatar">
-      <% @user.avatar.each do |avatar| %>
-        <%= image_tag avatar.thumb.url %>
-      <% end %>
+        <%= image_tag user.avatar.url if user.avatar.url? %>
     </div>
   <% end %>
 
   <p>
     <label>
       <%= form.check_box :remove_avatar %>
-      全ての写真を削除
+      写真を削除
     </label>
   </p>
 

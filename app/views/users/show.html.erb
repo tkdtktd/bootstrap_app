@@ -30,13 +30,9 @@
     <strong><%= t 'activerecord.attributes.user.introduction' %>：</strong>
     <%= @user.introduction %>
   </p>
-</div>
 
-<div class="box col-md-10 mx-auto">
   <p class="user-show-img">
-    <% @user.avatar.each do |avatar| %>
-        <%= image_tag avatar.url %>
-      <% end %>
+    <%= image_tag @user.avatar.url if @user.avatar? %>
   </p>
 
   <p>（最終更新：<%= @user.updated_at.strftime('%Y年%m月%d日') %>）</p> 

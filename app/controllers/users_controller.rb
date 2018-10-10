@@ -95,7 +95,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :age, {avatar: []}, :remove_avatar, :owner_id, :introduction)
+      params.require(:user).permit(:name, :age, :avatar, :remove_avatar, :owner_id, :introduction)
     end
     
     # 飼い主以外は犬の情報を編集できないようにするためのメソッド

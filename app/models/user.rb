@@ -8,8 +8,8 @@ class User < ApplicationRecord
   validates :age, presence: true
   validates :owner_id, presence: true
 
-  mount_uploaders :avatar, AvatarUploader
-  serialize :avatar,JSON unless Rails.env.production?
+  mount_uploader :avatar, AvatarUploader
+  # serialize :avatar,JSON unless Rails.env.production?
 
   def owner
     return Owner.find(self.owner_id)
