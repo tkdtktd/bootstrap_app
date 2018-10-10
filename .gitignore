@@ -29,3 +29,11 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# .env 環境変数ファイル
+.env
+
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml
+
