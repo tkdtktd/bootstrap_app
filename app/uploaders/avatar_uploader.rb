@@ -3,7 +3,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   if Rails.env.production?
     include Cloudinary::CarrierWave
     
-    cloudinary_transformation :angle => :exif, :flags => :force_strip
+    # cloudinary_transformation :angle => :exif, :flags => :force_strip
   else
     # Include RMagick or MiniMagick support:
     # include CarrierWave::RMagick
