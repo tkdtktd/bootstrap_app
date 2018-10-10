@@ -3,7 +3,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   if Rails.env.production?
     include Cloudinary::CarrierWave
     
-    cloudinary_transformation :angle => :exif, :flags => :force_strip
+    # cloudinary_transformation :angle => :exif, :flags => :force_strip
   else
     # Include RMagick or MiniMagick support:
     # include CarrierWave::RMagick
@@ -28,9 +28,9 @@ class AvatarUploader < CarrierWave::Uploader::Base
         img.strip       # Exif情報除去
         img = yield(img) if block_given?
         img
+      end
     end
-  end
-  
+    
   end
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)
