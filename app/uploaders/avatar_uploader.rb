@@ -20,17 +20,17 @@ class AvatarUploader < CarrierWave::Uploader::Base
     end
     
     # Exif情報のOrientationから画像をよしなに修正した後、Exif情報を除去する
+    process :fix_exif_rotation_and_strip_exif
+    
+    def fix_exif_rotation_and_strip_exif
+      manipulate! do |img|
+        img.auto_orient # よしなに！
+        img.strip       # Exif情報除去
+        img = yield(img) if block_given?
+        img
+    end
   end
   
-  process :fix_exif_rotation_and_strip_exif
-  
-  def fix_exif_rotation_and_strip_exif
-    manipulate! do |img|
-      img.auto_orient # よしなに！
-      img.strip       # Exif情報除去
-      img = yield(img) if block_given?
-      img
-    end
   end
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)
@@ -65,5 +65,9 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+
+  def public_id
+    model.id
+  end
 
 end
