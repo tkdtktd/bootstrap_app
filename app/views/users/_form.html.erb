@@ -37,8 +37,7 @@
   <br>
   <% if user.avatar? %>
     <p style="margin: 0;">（現在登録中の写真）</p>
-        <%= image_tag user.avatar.url if user.avatar? %>
-    </div>
+    <%= image_tag user.avatar.url if user.avatar? %>
   <% end %>
 
   <p>
