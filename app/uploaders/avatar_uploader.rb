@@ -3,8 +3,11 @@ class AvatarUploader < CarrierWave::Uploader::Base
   if Rails.env.production?
     include Cloudinary::CarrierWave
     
-    # cloudinary_transformation :angle => :exif, :flags => :force_strip
+    cloudinary_transformation :angle => :exif, :flags => :force_strip
   else
+    # Include RMagick or MiniMagick support:
+    # include CarrierWave::RMagick
+    include CarrierWave::MiniMagick
     
     # Choose what kind of storage to use for this uploader:
     storage :file
@@ -15,11 +18,6 @@ class AvatarUploader < CarrierWave::Uploader::Base
     def store_dir
       "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     end
-  end
-  
-  # Include RMagick or MiniMagick support:
-  # include CarrierWave::RMagick
-  include CarrierWave::MiniMagick
     # Exif情報のOrientationから画像をよしなに修正した後、Exif情報を除去する
     process :fix_exif_rotation_and_strip_exif
     
@@ -31,6 +29,8 @@ class AvatarUploader < CarrierWave::Uploader::Base
         img
       end
     end
+  end
+  
     
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)
