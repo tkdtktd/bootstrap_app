@@ -17,7 +17,7 @@
       <%= flash[:warning] %>
       <% users.each do |user| %>
         <tr>
-          <td><%= image_tag user.avatar[0].thumb.url %></td>
+          <td><%= image_tag user.avatar[0].thumb.url if user.avatar? %></td>
           <td><%= user.name %></td>
           <td><%= user.age %></td>
           <td><%= link_to 'プロフィール', user, class: "btn shiney profile" %></td>
