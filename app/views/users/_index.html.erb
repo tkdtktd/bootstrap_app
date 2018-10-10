@@ -25,7 +25,7 @@
           <td><%= link_to '削除', user, method: :delete, data: { confirm: '削除してよろしいですか?' }, class: "btn shiney destroy" if user.owner == current_owner %></td>
           <td>
           <!-- 画像の表示はLityを利用 -->
-          <%= link_to '写真を見る', user.avatar[0].url, 'data-lity': 'data-lity', class: "btn shiney zoom" %>
+          <%= link_to '写真を見る', user.avatar[0].url, 'data-lity': 'data-lity', class: "btn shiney zoom" if user.avatar? %>
         </tr>
 
       <% end %>
