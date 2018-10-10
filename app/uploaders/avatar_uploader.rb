@@ -18,6 +18,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
     def store_dir
       "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     end
+  end
     
     # Exif情報のOrientationから画像をよしなに修正した後、Exif情報を除去する
     process :fix_exif_rotation_and_strip_exif
@@ -31,7 +32,6 @@ class AvatarUploader < CarrierWave::Uploader::Base
       end
     end
     
-  end
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)
   #   # For Rails 3.1+ asset pipeline compatibility:
