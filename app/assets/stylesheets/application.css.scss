@@ -72,7 +72,6 @@ body {
             }
             &:after {
               border: 3px outset gray;
-              border-radius: 10%;
               display: block;
               position: absolute;
               top: 0;
@@ -108,14 +107,6 @@ body {
       text-shadow: #d66 2px 2px 2px;
     }
 
-    // ハンバーガーメニュー
-    .navbar-collapse {
-      .form-inline {
-        .form-control {
-          width: 150px;
-        }
-      }
-    }
   }
 
   // メインコンテンツ
@@ -255,3 +246,110 @@ body {
   }
 }
 
+
+// レスポンシブデザイン
+@media screen and (max-width: 992px){
+
+  .navbar {
+    .nav-item {
+      .nav-link {
+        padding-left: 10px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px){
+
+  .navbar {
+    .form-inline {
+      .btn {
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+
+  // user - index - リスト部分
+  .table-narrow {
+    background: #fff;
+    border: 1px solid darkcyan;
+
+    .table {
+
+      margin: 0;
+      td {
+          
+      }
+      // プロフィール等ボタン
+      .btn {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .shiney {
+        text-align: center;
+        text-decoration: none;
+        // color: $color;
+        // border: 2px solid $color;
+        display: inline-block;
+        border-radius: 0.3em;
+        transition: all 0.2s ease-in-out;
+        position: relative;
+        overflow: hidden;
+        &:before {
+          content: "";
+          background-color: rgba(255,255,255,0.5);
+          height: 100%;
+          width: 3em;
+          display: block;
+          position: absolute;
+          top: 0;
+          left: -4.5em;
+          transform: skewX(-45deg) translateX(0);
+          transition: none;
+        }
+        &:hover {
+          // background-color: $color;
+          color: #fff;
+          // border-bottom: 4px solid darken($color, 10%);
+          &:before {
+            transform: skewX(-45deg) translateX(13.5em);
+            transition: all 0.5s ease-in-out;
+          }
+        }
+      }
+      .profile {
+        color: $profile;
+        border: 2px solid $profile;
+        &:hover {
+          border-bottom: 4px solid darken($profile, 10%);
+          background-color: $profile;
+        }
+      }
+      .edit {
+        color: $edit;
+        border: 2px solid $edit;
+        &:hover {
+          border-bottom: 4px solid darken($edit, 10%);
+          background-color: $edit;
+        }
+      }
+      .destroy {
+        color: $destroy;
+        border: 2px solid $destroy;
+        &:hover {
+          border-bottom: 4px solid darken($destroy, 10%);
+          background-color: $destroy;
+        }
+      }
+      .zoom {
+        color: $zoom;
+        border: 2px solid $zoom;
+        &:hover {
+          border-bottom: 4px solid darken($zoom, 10%);
+          background-color: $zoom;
+        }
+      }
+    }
+  }
+}
