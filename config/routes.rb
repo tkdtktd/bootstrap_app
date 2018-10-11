@@ -17,4 +17,6 @@ Rails.application.routes.draw do
   post "/users/:id" => "users#show" 
   get "/posts/:id" => "posts#show"
   post "/posts/:id" => "posts#show"
+  get "/owners/:id" => "owners#show"
+  post "/owners/:id" => "owners#show"
 end
