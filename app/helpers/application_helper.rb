@@ -15,6 +15,7 @@ module ApplicationHelper
     end
   end
 
+  # コントローラーの
   def resource_name
     :owner
   end

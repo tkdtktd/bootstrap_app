@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   # before the location can be stored.
 
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :basic
 
   protected
 
@@ -33,6 +34,12 @@ class ApplicationController < ActionController::Base
 
     def after_sign_out_path_for(resource_or_scope)
       stored_location_for(resource_or_scope) || super
+    end
+
+    def basic
+      authenticate_or_request_with_http_basic do |user, pass|
+       user == 'dogs' && pass == 'dogs'
+      end
     end
 
 end
