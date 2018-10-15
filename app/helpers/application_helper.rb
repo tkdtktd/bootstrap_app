@@ -15,17 +15,17 @@ module ApplicationHelper
     end
   end
 
-  # コントローラーの
+  # Deviseのログイン画面でエラーになるのの対策用メソッド
   def resource_name
     :owner
   end
   
   def resource
-      @resource ||= Owner.new
+    @resource ||= Owner.new
   end
   
   def devise_mapping
-      @devise_mapping ||= Devise.mappings[:owner]
+    @devise_mapping ||= Devise.mappings[:owner]
   end
   
 end

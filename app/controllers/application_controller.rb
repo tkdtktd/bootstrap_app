@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
 
     def basic
       authenticate_or_request_with_http_basic do |user, pass|
-       user == 'dogs' && pass == 'dogs'
+        user == 'dogs' && pass == 'dogs'
       end
     end
 
