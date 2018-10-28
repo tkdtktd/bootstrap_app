@@ -9,19 +9,16 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    if params[:name].present? && params[:age].blank?
-      @user = User.find_by(name: params[:name])
-      @users = User.where(name: @user.name) if @user
-      # 理想的にはこんな感じの書き方
+    if params[:name] != "" && params[:age] == ""
+      @users = User.where('name LIKE ?', "%#{params[:name]}%")
       @users = @users.page(params[:page]).per(10)
       flash[:warning] = "該当データなし" if @users.count == 0
-    elsif params[:name].blank? && params[:age].present?
+    elsif params[:name] == "" && params[:age] != ""
       @users = User.where(age: params[:age])
       @users = @users.page(params[:page]).per(10)
       flash[:warning] = "該当データなし" if @users.count == 0
-    elsif params[:name].present? && params[:age].present?
-      @user = User.find_by(name: params[:name], age: params[:age])
-      @users = User.where(name: @user.name, age: @user.age) if @user
+    elsif params[:name] && params[:age]
+      @users = User.where('name LIKE ?', "%#{params[:name]}%").where(age: params[:age])
       @users = @users.page(params[:page]).per(10)
       flash[:warning] = "該当データなし" if @users.count == 0
     else
