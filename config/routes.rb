@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   # showアクションはdeviseにないので、resoucesで用意する。
 
   resources :users
-  resources :likes, only: [:create, :destroy]
+  # resources :likes, only: [:create, :destroy]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   root "users#index"
@@ -19,4 +19,8 @@ Rails.application.routes.draw do
   post "/posts/:id" => "posts#show"
   get "/owners/:id" => "owners#show"
   post "/owners/:id" => "owners#show"
+
+  # いいねのcreate、destroyに使うPOSTメソッド
+  post "/likes", to: "likes#create", as: 'likes_create'
+  post "/likes/:id", to: "likes#destroy", as: 'likes_destroy'
 end
