@@ -9,23 +9,23 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    if params[:name] != "" && params[:age] == ""
-      @users = User.where('name LIKE ?', "%#{params[:name]}%")
+    if params[:name].present? && params[:age].blank?
+      @user = User.find_by(name: params[:name])
+      @users = User.where(name: @user.name) if @user
+      # 理想的にはこんな感じの書き方
       @users = @users.page(params[:page]).per(10)
       flash[:warning] = "該当データなし" if @users.count == 0
-    elsif params[:name] == "" && params[:age] != ""
+    elsif params[:name].blank? && params[:age].present?
       @users = User.where(age: params[:age])
       @users = @users.page(params[:page]).per(10)
       flash[:warning] = "該当データなし" if @users.count == 0
-    elsif params[:name] && params[:age]
-      @users = User.where('name LIKE ?', "%#{params[:name]}%").where(age: params[:age])
+    elsif params[:name].present? && params[:age].present?
+      @user = User.find_by(name: params[:name], age: params[:age])
+      @users = User.where(name: @user.name, age: @user.age) if @user
       @users = @users.page(params[:page]).per(10)
       flash[:warning] = "該当データなし" if @users.count == 0
     else
       flash[:warning] = ""
-      # @age = 30
-      # @users = User.find_by_sql("SELECT * FROM users WHERE age <= #{@age}")
-      # @users = User.find_by_sql("SELECT * FROM users").page(params[:page]).per(5)
       @users = User.page(params[:page]).per(10)
     end
   end

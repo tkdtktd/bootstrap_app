@@ -33,6 +33,8 @@
       <% end %>
     </ul>
     <%= form_tag(users_path, method: "get", class: "form-inline my-2 my-lg-0") do %>
+    <%# 検索する場合は必ず method: "get" にする。get意外だと脆弱性が発生する。参考↓ %>
+    <%# https://railsguides.jp/form_helpers.html %>
       <%= text_field_tag :name, '', class: "form-control mr-sm-2", placeholder: "犬の名前で検索" %>
       
       <!-- Userモデルのageカラムを取り出し、重複を除く -->
