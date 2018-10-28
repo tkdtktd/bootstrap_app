@@ -1,9 +1,6 @@
 class LikesController < ApplicationController
 
   before_action :authenticate_owner!
-  # CSRFエラー対策
-  # protect_from_forgery except: [:create, :destroy]
-  # 必要なかった！
 
   def create
     @user = User.find(params[:user_id])

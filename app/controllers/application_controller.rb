@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   # The callback which stores the current location must be added before you authenticate the user 
   # as `authenticate_user!` (or whatever your resource is) will halt the filter chain and redirect 
   # before the location can be stored.
+
+  # CSRF対策メソッド？手動で追記（自動で生成されるはずでは...？）
   protect_from_forgery with: :exception
 
   before_action :configure_permitted_parameters, if: :devise_controller?
